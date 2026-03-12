@@ -8,7 +8,7 @@ const FORBIDDEN_KEYS = new Set([
   "completionTokens", "totalTokens", "modelVersion", "temperature", "topP",
   "apiKey", "secretKey", "privateKey", "jwtSecret", "encryptionKey",
   "password", "passwordHash", "salt", "totpSecret", "backupCodes",
-  "stripeSecretKey", "webhookSecret", "sendgridKey", "rpcUrl",
+  "stripeSecretKey", "webhookSecret", "smtpPass", "rpcUrl",
   "databaseUrl", "redisUrl", "connectionString", "adminToken",
   "rawCardData", "cvv", "cardNumber", "bankAccountNumber", "routingNumber",
   "internalRiskFlags", "fraudModel", "mlScore", "predictionModel",
@@ -87,7 +87,7 @@ export function sanitizeLogData(data: any): any {
 export function auditEnvironmentExposure() {
   const dangerousEnvVars = [
     "ANTHROPIC_API_KEY", "OPENAI_API_KEY", "JWT_SECRET",
-    "ENCRYPTION_KEY", "STRIPE_SECRET_KEY", "SENDGRID_API_KEY",
+    "ENCRYPTION_KEY", "STRIPE_SECRET_KEY", "SMTP_PASS",
     "DATABASE_URL", "REDIS_URL",
   ];
   

@@ -10,7 +10,7 @@ Advancia Pay Ledger is a robust, security-first financial backend designed for h
 - **Stripe Billing**: Subscriptions, payment methods, and automated webhook handling.
 - **AI Agent Orchestrator**: 8 intelligent background processes (Fraud Shield, Payment Optimizer, Content Creator, Revenue Analyst, Churn Predictor, Compliance Monitor, Support Handler, Email Composer) that provide actionable insights directly to the platform via the `features` API.
 - **Automated Scheduling**: Cron-driven jobs continuously manage security, compliance, and revenue monitoring asynchronously.
-- **Branded Email System**: Full `SendGrid` integration for automated Welcome, Security Alert, and Invoice emails.
+- **Branded Email System**: Full `Nodemailer/SMTP` integration for automated Welcome, Security Alert, and Invoice emails.
 - **Compliance & Security**: Role-based access (admin/cfo), strict JWT auth, request rate-limiting, comprehensive response sanitization, and audit logging.
 - **Zero-Localhost Guarantee**: Fully environment-variable driven for drop-in production deployment.
 
@@ -21,7 +21,7 @@ Advancia Pay Ledger is a robust, security-first financial backend designed for h
 - **Caching/Streaming**: Redis (via Docker)
 - **Blockchain**: `@solana/web3.js`, `ethers.js`, `fireblocks-sdk`
 - **Security**: `speakeasy` (TOTP), `bcryptjs`, `jsonwebtoken`
-- **Communication**: `sendgrid/mail`
+- **Communication**: `nodemailer`
 - **Automation**: `node-cron`
 - **Frontend**: Next.js (React) dashboards under `/frontend`
 
@@ -56,7 +56,10 @@ ADMIN_PIN_HASH="bcrypt_hash_of_admin_pin"
 # Integrations
 STRIPE_SECRET_KEY="sk_test_..."
 FIREBLOCKS_API_KEY="..."
-SENDGRID_API_KEY="..."
+SMTP_HOST="..."
+SMTP_PORT=587
+SMTP_USER="..."
+SMTP_PASS="..."
 ```
 
 ### 3. Start Infrastructure
