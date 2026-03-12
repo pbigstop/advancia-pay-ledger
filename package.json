@@ -15,7 +15,6 @@
   "dependencies": {
     "@fireblocks/ts-sdk": "^14.1.0",
     "@prisma/client": "^5.22.0",
-    "@sendgrid/mail": "^8.1.6",
     "@solana/spl-token": "^0.4.9",
     "@solana/web3.js": "^1.95.0",
     "bcryptjs": "^2.4.3",
