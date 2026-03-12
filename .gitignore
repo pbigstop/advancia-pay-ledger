@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.local
+.env.production
+*.db
+*.sqlite
+prisma/*.db
+prisma/migrations/
+.next/
+coverage/
+*.log
+.DS_Store

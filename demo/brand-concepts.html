@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advancia Pay Ledger — Brand Packaging Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gap: 1.5rem;
+    --radius: 12px;
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body {
+    background: #07080C;
+    color: #E8EAF0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 2.5rem 3rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-left .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    color: #5A6080;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .header-left h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #E8EAF0 40%, #7B8FD4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header-right {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: #3D4460;
+    line-height: 1.7;
+    text-align: right;
+  }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex;
+    gap: 0;
+    padding: 2rem 3rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem 2rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #3D4460;
+    position: relative;
+    white-space: nowrap;
+    transition: color var(--transition);
+  }
+
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transition: transform var(--transition);
+  }
+
+  .tab-btn.active { color: inherit; }
+  .tab-btn.active::after { transform: scaleX(1); }
+
+  .tab-btn[data-tab="0"] { color: #5B9AFF; }
+  .tab-btn[data-tab="1"] { color: #00D4A0; }
+  .tab-btn[data-tab="2"] { color: #FF6B35; }
+
+  /* ── PANELS ── */
+  .panel { display: none; animation: fadeIn 0.4s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ═══════════════════════════════════════
+     CONCEPT 1 — PRECISION AUTHORITY
+     Dark navy / electric blue / monospace
+  ═══════════════════════════════════════ */
+  .c1 { padding: 3rem; }
+
+  .c1-hero {
+    background: linear-gradient(135deg, #0A0F1E 0%, #0D1B3E 60%, #051530 100%);
+    border: 1px solid rgba(91,154,255,0.15);
+    border-radius: var(--radius);
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .c1-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(91,154,255,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .c1-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(91,154,255,0.4), transparent);
+  }
+
+  .c1-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #5B9AFF;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .c1-tag::before { content: '//'; opacity: 0.5; }
+
+  .c1-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #E8F0FF;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .c1-wordmark span {
+    color: #5B9AFF;
+  }
+
+  .c1-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: rgba(91,154,255,0.6);
+    letter-spacing: 0.12em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+
+  .c1-tagline {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.1rem, 2.5vw, 1.7rem);
+    color: rgba(232,240,255,0.7);
+    max-width: 540px;
+    line-height: 1.5;
+  }
+
+  .c1-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  .c1-stat {
+    background: rgba(91,154,255,0.05);
+    border: 1px solid rgba(91,154,255,0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+  }
+
+  .c1-stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #5B9AFF;
+    letter-spacing: -0.03em;
+  }
+
+  .c1-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: #5A6080;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .c1-elements {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .c1-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: border-color var(--transition), background var(--transition);
+  }
+
+  .c1-card:hover {
+    border-color: rgba(91,154,255,0.25);
+    background: rgba(91,154,255,0.04);
+  }
+
+  .c1-card h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: #5B9AFF;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .c1-palette {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .swatch {
+    width: 48px; height: 48px;
+    border-radius: 6px;
+    position: relative;
+  }
+
+  .swatch-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: #5A6080;
+    margin-top: 0.3rem;
+    text-align: center;
+    width: 48px;
+  }
+
+  .swatch-group { text-align: center; }
+
+  .font-demo {
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .font-demo:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .font-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: #3D4460;
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ═══════════════════════════════════════
+     CONCEPT 2 — CLINICAL TRUST
+     White / mint / clean
+  ═══════════════════════════════════════ */
+  .c2 { padding: 3rem; background: #07080C; }
+
+  .c2-hero {
+    background: #F4F6F0;
+    border-radius: var(--radius);
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .c2-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,160,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,160,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .c2-circle {
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,212,160,0.15);
+  }
+
+  .c2-circle2 {
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(0,212,160,0.07);
+  }
+
+  .c2-wordmark {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: #0A1A14;
+    position: relative;
+    z-index: 1;
+    line-height: 1;
+  }
+
+  .c2-wordmark strong {
+    font-weight: 600;
+    color: #007A5A;
+  }
+
+  .c2-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #00D4A0;
+    margin-left: 4px;
+    vertical-align: super;
+  }
+
+  .c2-sub {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: #007A5A;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .c2-tagline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    font-weight: 300;
+    color: #2A3A30;
+    max-width: 500px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  .c2-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #00D4A0;
+    color: #002A1E;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .c2-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .c2-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(0,212,160,0.12);
+    border-radius: var(--radius);
+    padding: 2rem;
+  }
+
+  .c2-card h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #00D4A0;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  /* ═══════════════════════════════════════
+     CONCEPT 3 — BOLD DISRUPTOR
+     Black / electric orange / editorial
+  ═══════════════════════════════════════ */
+  .c3 { padding: 3rem; }
+
+  .c3-hero {
+    background: #0C0A08;
+    border: 1px solid rgba(255,107,53,0.2);
+    border-radius: var(--radius);
+    padding: 4rem;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .c3-stripe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(180deg, #FF6B35, #FF9500);
+  }
+
+  .c3-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .c3-wordmark {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    position: relative;
+    z-index: 1;
+  }
+
+  .c3-wordmark .line1 { color: #FF6B35; }
+  .c3-wordmark .line2 { color: #F0EAE0; }
+  .c3-wordmark .line3 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,107,53,0.4);
+    font-size: 0.6em;
+  }
+
+  .c3-tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: rgba(240,234,224,0.5);
+    margin-top: 2rem;
+    max-width: 480px;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  .c3-tagline span { color: #FF6B35; }
+
+  .c3-badge {
+    display: inline-block;
+    background: #FF6B35;
+    color: #0C0A08;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .c3-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .c3-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,107,53,0.1);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: border-color var(--transition);
+  }
+
+  .c3-card:hover { border-color: rgba(255,107,53,0.3); }
+
+  .c3-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #FF6B35;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  /* ── SHARED ELEMENTS ── */
+  .concept-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: #3D4460;
+  }
+
+  .concept-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5A6080;
+    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .use-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  .use-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    border: 1px solid;
+    letter-spacing: 0.05em;
+  }
+
+  .use-tag.blue { color: #5B9AFF; border-color: rgba(91,154,255,0.25); background: rgba(91,154,255,0.05); }
+  .use-tag.green { color: #00D4A0; border-color: rgba(0,212,160,0.25); background: rgba(0,212,160,0.05); }
+  .use-tag.orange { color: #FF6B35; border-color: rgba(255,107,53,0.25); background: rgba(255,107,53,0.05); }
+
+  .body-text {
+    font-size: 0.88rem;
+    color: rgba(232,234,240,0.6);
+    line-height: 1.7;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+
+  .comparison-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #3D4460;
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .comparison-table td {
+    font-size: 0.82rem;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: rgba(232,234,240,0.7);
+    vertical-align: top;
+  }
+
+  .comparison-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .dot-blue { color: #5B9AFF; font-size: 1.2rem; }
+  .dot-green { color: #00D4A0; font-size: 1.2rem; }
+  .dot-orange { color: #FF6B35; font-size: 1.2rem; }
+
+  /* ── FOOTER ── */
+  .rec-footer {
+    margin: 3rem;
+    padding: 2rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+  }
+
+  .rec-footer h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  @media (max-width: 640px) {
+    header, .c1, .c2, .c3, .rec-footer { padding: 1.5rem; }
+    .tab-nav { padding: 1.5rem 1.5rem 0; }
+    .c1-hero, .c2-hero, .c3-hero { padding: 2.5rem 2rem; }
+    .tab-btn { padding: 0.8rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="eyebrow">Brand Packaging Study</div>
+    <h1>Advancia Pay Ledger</h1>
+  </div>
+  <div class="header-right">
+    3 Concepts · Healthcare Fintech<br>
+    $247K MRR · Seed Stage · 24 Facilities
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="0">Concept 01 — Precision Authority</button>
+  <button class="tab-btn" data-tab="1">Concept 02 — Clinical Trust</button>
+  <button class="tab-btn" data-tab="2">Concept 03 — Bold Disruptor</button>
+  <button class="tab-btn" data-tab="3">Compare All</button>
+</nav>
+
+<!-- ═══ CONCEPT 1 ═══ -->
+<div class="panel active" id="panel-0">
+<div class="c1">
+
+  <div class="concept-label">Concept 01 · Precision Authority · Dark / Electric Blue</div>
+
+  <div class="c1-hero">
+    <div class="c1-tag">Healthcare Payments Infrastructure</div>
+    <div class="c1-wordmark">ADVANCIA<span>.</span></div>
+    <div class="c1-sub">Pay Ledger · Enterprise</div>
+    <div class="c1-tagline">The payment infrastructure that healthcare enterprises actually trust.</div>
+    <div class="c1-stats">
+      <div class="c1-stat">
+        <div class="c1-stat-num">$247K</div>
+        <div class="c1-stat-label">Monthly Recurring Revenue</div>
+      </div>
+      <div class="c1-stat">
+        <div class="c1-stat-num">24</div>
+        <div class="c1-stat-label">Active Facilities</div>
+      </div>
+      <div class="c1-stat">
+        <div class="c1-stat-num">42%</div>
+        <div class="c1-stat-label">MoM Growth</div>
+      </div>
+      <div class="c1-stat">
+        <div class="c1-stat-num">HIPAA</div>
+        <div class="c1-stat-label">PCI-DSS Compliant</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Visual Identity System</div>
+  <div class="c1-elements">
+    <div class="c1-card">
+      <h3>Color Palette</h3>
+      <div class="c1-palette">
+        <div class="swatch-group">
+          <div class="swatch" style="background:#5B9AFF"></div>
+          <div class="swatch-label">#5B9AFF</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#0D1B3E"></div>
+          <div class="swatch-label">#0D1B3E</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#07080C"></div>
+          <div class="swatch-label">#07080C</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#E8F0FF"></div>
+          <div class="swatch-label">#E8F0FF</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#1E3A6E; border:1px solid rgba(255,255,255,0.1)"></div>
+          <div class="swatch-label">#1E3A6E</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c1-card">
+      <h3>Typography</h3>
+      <div class="font-demo">
+        <div class="font-name">Syne 800 — Wordmark / Headlines</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.03em;color:#E8F0FF">ADVANCIA</div>
+      </div>
+      <div class="font-demo">
+        <div class="font-name">Fraunces Italic — Taglines</div>
+        <div style="font-family:'Fraunces',serif;font-style:italic;font-weight:300;color:rgba(232,240,255,0.6);font-size:0.9rem">Powering the future of healthcare payments</div>
+      </div>
+      <div class="font-demo">
+        <div class="font-name">DM Mono — Data / Labels</div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.75rem;color:#5B9AFF;letter-spacing:0.12em">$247,000 MRR // HIPAA</div>
+      </div>
+    </div>
+
+    <div class="c1-card">
+      <h3>Brand Voice</h3>
+      <p class="body-text">Authoritative. Technical. Precise. Speaks to CFOs, CIOs, and compliance officers at enterprise healthcare groups. Data leads. Trust is earned through specificity — never vague promises.</p>
+      <div class="use-row" style="margin-top:1rem">
+        <span class="use-tag blue">Pitch Deck</span>
+        <span class="use-tag blue">Investor Materials</span>
+        <span class="use-tag blue">Enterprise Sales</span>
+        <span class="use-tag blue">API Docs</span>
+      </div>
+    </div>
+
+    <div class="c1-card">
+      <h3>Packaging Applications</h3>
+      <p class="body-text" style="margin-bottom:0.8rem">Where this identity shines:</p>
+      <ul style="list-style:none;font-size:0.82rem;color:rgba(232,234,240,0.6);line-height:2">
+        <li>→ Seed round pitch deck cover</li>
+        <li>→ Executive one-pager for DSO CFOs</li>
+        <li>→ Data room branding</li>
+        <li>→ Platform dashboard UI</li>
+        <li>→ Conference / event materials</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ CONCEPT 2 ═══ -->
+<div class="panel" id="panel-1">
+<div class="c2">
+
+  <div class="concept-label">Concept 02 · Clinical Trust · White / Mint Green</div>
+
+  <div class="c2-hero">
+    <div class="c2-grid-bg"></div>
+    <div class="c2-circle"></div>
+    <div class="c2-circle2"></div>
+
+    <div class="c2-wordmark">
+      advancia<strong>pay</strong><span class="c2-dot"></span>
+    </div>
+    <div class="c2-sub">Healthcare Payment Ledger</div>
+    <div class="c2-tagline">Clean, compliant, and connected — payments infrastructure built for the way healthcare works.</div>
+    <div class="c2-pill">✓ HIPAA · PCI-DSS · SOC 2</div>
+  </div>
+
+  <div class="section-title">Visual Identity System</div>
+  <div class="c2-cards">
+    <div class="c2-card">
+      <h3>Color Palette</h3>
+      <div class="c1-palette">
+        <div class="swatch-group">
+          <div class="swatch" style="background:#00D4A0"></div>
+          <div class="swatch-label">#00D4A0</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#007A5A"></div>
+          <div class="swatch-label">#007A5A</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#F4F6F0"></div>
+          <div class="swatch-label">#F4F6F0</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#0A1A14"></div>
+          <div class="swatch-label">#0A1A14</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#E0F5EE"></div>
+          <div class="swatch-label">#E0F5EE</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c2-card">
+      <h3>Typography</h3>
+      <div class="font-demo">
+        <div class="font-name">IBM Plex Sans 300/600 — Primary</div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-weight:300;font-size:1.3rem;letter-spacing:-0.01em;color:#E8EAF0">advancia<strong style="font-weight:600;color:#00D4A0">pay</strong></div>
+      </div>
+      <div class="font-demo">
+        <div class="font-name">Fraunces 300 — Taglines</div>
+        <div style="font-family:'Fraunces',serif;font-weight:300;color:rgba(232,234,240,0.5);font-size:0.88rem">Built for healthcare. Trusted by operators.</div>
+      </div>
+    </div>
+
+    <div class="c2-card">
+      <h3>Brand Voice</h3>
+      <p class="body-text">Calm. Reliable. Professional. Speaks the language of healthcare administrators — clean, clinical, and never flashy. Compliance and clarity above all.</p>
+      <div class="use-row" style="margin-top:1rem">
+        <span class="use-tag green">Hospital Groups</span>
+        <span class="use-tag green">Compliance Docs</span>
+        <span class="use-tag green">Patient-facing</span>
+        <span class="use-tag green">Onboarding</span>
+      </div>
+    </div>
+
+    <div class="c2-card">
+      <h3>Packaging Applications</h3>
+      <p class="body-text" style="margin-bottom:0.8rem">Where this identity shines:</p>
+      <ul style="list-style:none;font-size:0.82rem;color:rgba(232,234,240,0.6);line-height:2">
+        <li>→ Facility admin onboarding portal</li>
+        <li>→ Compliance & security documentation</li>
+        <li>→ Healthcare conference booth</li>
+        <li>→ Patient payment receipts / UI</li>
+        <li>→ Partnership proposals to hospital systems</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ CONCEPT 3 ═══ -->
+<div class="panel" id="panel-2">
+<div class="c3">
+
+  <div class="concept-label">Concept 03 · Bold Disruptor · Black / Electric Orange</div>
+
+  <div class="c3-hero">
+    <div class="c3-stripe"></div>
+    <div class="c3-noise"></div>
+
+    <div class="c3-wordmark">
+      <div class="line1">ADVANCIA</div>
+      <div class="line2">PAY LEDGER</div>
+      <div class="line3">HEALTHCARE FINTECH</div>
+    </div>
+
+    <div class="c3-tagline">
+      Healthcare payments were broken.<br>
+      <span>We fixed them.</span> Crypto, ACH, wire, card —<br>
+      one platform. Zero friction.
+    </div>
+
+    <div class="c3-badge">$1.5M Seed · Now Open</div>
+  </div>
+
+  <div class="section-title">Visual Identity System</div>
+  <div class="c3-cards">
+    <div class="c3-card">
+      <h3>Color Palette</h3>
+      <div class="c1-palette">
+        <div class="swatch-group">
+          <div class="swatch" style="background:#FF6B35"></div>
+          <div class="swatch-label">#FF6B35</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#FF9500"></div>
+          <div class="swatch-label">#FF9500</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#F0EAE0"></div>
+          <div class="swatch-label">#F0EAE0</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#0C0A08"></div>
+          <div class="swatch-label">#0C0A08</div>
+        </div>
+        <div class="swatch-group">
+          <div class="swatch" style="background:#1A1410; border:1px solid rgba(255,255,255,0.1)"></div>
+          <div class="swatch-label">#1A1410</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c3-card">
+      <h3>Typography</h3>
+      <div class="font-demo">
+        <div class="font-name">Syne 800 — Wordmark / Bold statements</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;letter-spacing:-0.04em;color:#FF6B35">ADVANCIA</div>
+      </div>
+      <div class="font-demo">
+        <div class="font-name">DM Mono — Body / Supporting</div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.78rem;color:rgba(240,234,224,0.5)">42% MoM growth. Real payments. No demos.</div>
+      </div>
+    </div>
+
+    <div class="c3-card">
+      <h3>Brand Voice</h3>
+      <p class="body-text">Challenger. Confident. Urgent. Speaks to investors, VC scouts, and fintech-savvy operators who are tired of legacy systems. Disruption framing with hard proof points.</p>
+      <div class="use-row" style="margin-top:1rem">
+        <span class="use-tag orange">VC Pitch</span>
+        <span class="use-tag orange">Angel Investors</span>
+        <span class="use-tag orange">Press / PR</span>
+        <span class="use-tag orange">Social Media</span>
+      </div>
+    </div>
+
+    <div class="c3-card">
+      <h3>Packaging Applications</h3>
+      <p class="body-text" style="margin-bottom:0.8rem">Where this identity shines:</p>
+      <ul style="list-style:none;font-size:0.82rem;color:rgba(232,234,240,0.6);line-height:2">
+        <li>→ VC pitch deck (seed round)</li>
+        <li>→ AngelList / Wefunder profile</li>
+        <li>→ Product Hunt launch page</li>
+        <li>→ TechCrunch / press kit</li>
+        <li>→ Founder LinkedIn presence</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══ COMPARE ═══ -->
+<div class="panel" id="panel-3">
+<div style="padding:3rem">
+  <div class="concept-label">Side-by-Side Comparison</div>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th><span class="dot-blue">●</span> Precision Authority</th>
+        <th><span class="dot-green">●</span> Clinical Trust</th>
+        <th><span class="dot-orange">●</span> Bold Disruptor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Primary Audience</strong></td>
+        <td>Enterprise buyers, CIOs, CFOs</td>
+        <td>Hospital admins, compliance officers</td>
+        <td>VCs, angel investors, press</td>
+      </tr>
+      <tr>
+        <td><strong>Core Emotion</strong></td>
+        <td>Trust through precision</td>
+        <td>Safety and reliability</td>
+        <td>Excitement and urgency</td>
+      </tr>
+      <tr>
+        <td><strong>Best Use</strong></td>
+        <td>Seed pitch deck, data room, platform UI</td>
+        <td>Facility onboarding, compliance, patient UI</td>
+        <td>Fundraising, PR, Product Hunt, social</td>
+      </tr>
+      <tr>
+        <td><strong>Tone</strong></td>
+        <td>Technical, authoritative, data-driven</td>
+        <td>Calm, professional, compliant</td>
+        <td>Bold, challenging, disruptive</td>
+      </tr>
+      <tr>
+        <td><strong>Colors</strong></td>
+        <td>Deep navy + electric blue</td>
+        <td>White/mint + forest green</td>
+        <td>Black + electric orange</td>
+      </tr>
+      <tr>
+        <td><strong>Font Vibe</strong></td>
+        <td>Syne + DM Mono (modern/technical)</td>
+        <td>IBM Plex Sans (clean/neutral)</td>
+        <td>Syne + DM Mono (aggressive/bold)</td>
+      </tr>
+      <tr>
+        <td><strong>Crypto Alignment</strong></td>
+        <td>✓ Strong — matches web3 aesthetic</td>
+        <td>△ Neutral — focuses on compliance</td>
+        <td>✓ Strong — disruptive fintech energy</td>
+      </tr>
+      <tr>
+        <td><strong>Healthcare Alignment</strong></td>
+        <td>✓ Strong — enterprise credibility</td>
+        <td>✓✓ Strongest — clinical trust</td>
+        <td>△ Moderate — needs careful copy</td>
+      </tr>
+      <tr>
+        <td><strong>Recommended For</strong></td>
+        <td>Current seed raise + platform UI</td>
+        <td>Facility sales + onboarding flow</td>
+        <td>VC pitch events + announcements</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:2.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem">
+    <div style="background:rgba(91,154,255,0.05);border:1px solid rgba(91,154,255,0.15);border-radius:12px;padding:1.8rem">
+      <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:#5B9AFF;text-transform:uppercase;margin-bottom:0.8rem">Recommendation for Seed Round</div>
+      <p style="font-size:0.85rem;color:rgba(232,234,240,0.7);line-height:1.7">Use <strong style="color:#5B9AFF">Concept 01</strong> as your primary brand for pitch materials and the platform. It commands enterprise credibility while nodding to your crypto infrastructure.</p>
+    </div>
+    <div style="background:rgba(0,212,160,0.05);border:1px solid rgba(0,212,160,0.15);border-radius:12px;padding:1.8rem">
+      <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:#00D4A0;text-transform:uppercase;margin-bottom:0.8rem">Recommendation for Facility Sales</div>
+      <p style="font-size:0.85rem;color:rgba(232,234,240,0.7);line-height:1.7">Use <strong style="color:#00D4A0">Concept 02</strong> for your facility-facing materials — onboarding docs, compliance sheets, and any patient-touching interfaces.</p>
+    </div>
+    <div style="background:rgba(255,107,53,0.05);border:1px solid rgba(255,107,53,0.15);border-radius:12px;padding:1.8rem">
+      <div style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;color:#FF6B35;text-transform:uppercase;margin-bottom:0.8rem">Recommendation for Fundraising Events</div>
+      <p style="font-size:0.85rem;color:rgba(232,234,240,0.7);line-height:1.7">Deploy <strong style="color:#FF6B35">Concept 03</strong> for VC pitch nights, Product Hunt, TechCrunch announcements, and your LinkedIn founder presence.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="rec-footer">
+  <h3 style="color:#5B9AFF">Strategic Packaging Recommendation</h3>
+  <p class="body-text" style="max-width:720px">
+    Advancia doesn't need to pick one — deploy all three as a <strong style="color:#E8EAF0">contextual brand system</strong>.
+    Concept 01 anchors your identity (platform + investors). Concept 02 handles facility trust-building.
+    Concept 03 fires up fundraising events and launch moments. Together they cover every audience
+    you're targeting: enterprise buyers, healthcare operators, and seed-stage investors.
+  </p>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = btn.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`panel-${idx}`).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

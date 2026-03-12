@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String   @id @default(uuid())
+  email            String   @unique
+  password         String
+  firstName        String
+  lastName         String
+  role             String   @default("user") // admin | cfo | provider | patient
+  totpSecret       String?
+  facilityId       String?
+  stripeCustomerId String?  @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  wallets              Wallet[]
+  transactionsSent     Transaction[]        @relation("TransactionSender")
+  transactionsReceived Transaction[]        @relation("TransactionReceiver")
+  cryptoWithdrawals    CryptoWithdrawal[]   @relation("WithdrawalInitiator")
+  subscription         Subscription?
+  billingTransactions  BillingTransaction[]
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  userId    String
+  currency  String
+  balance   Float    @default(0)
+  type      String   @default("fiat") // fiat | crypto
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+
+  @@unique([userId, currency])
+}
+
+model Transaction {
+  id           String   @id @default(uuid())
+  type         String // exchange | transfer | deposit | withdrawal
+  status       String   @default("pending") // pending | processing | completed | failed
+  fromCurrency String
+  toCurrency   String?
+  fromAmount   Float
+  toAmount     Float?
+  fee          Float    @default(0)
+  description  String?
+  reference    String   @unique
+  senderId     String
+  receiverId   String?
+  walletId     String?
+  note         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sender   User    @relation("TransactionSender", fields: [senderId], references: [id])
+  receiver User?   @relation("TransactionReceiver", fields: [receiverId], references: [id])
+  wallet   Wallet? @relation(fields: [walletId], references: [id])
+}
+
+model CryptoWithdrawal {
+  id           String    @id @default(uuid())
+  facilityId   String
+  chain        String
+  token        String
+  toAddress    String
+  amount       Float
+  status       String    @default("PENDING") // PENDING | COMPLETED | FAILED
+  txHash       String?
+  errorMessage String?
+  initiatedBy  String
+  note         String?
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  initiator User @relation("WithdrawalInitiator", fields: [initiatedBy], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  action     String
+  entityType String
+  metadata   String
+  facilityId String?
+  createdAt  DateTime @default(now())
+}
+
+model Subscription {
+  id                   String    @id @default(uuid())
+  userId               String    @unique
+  planId               String
+  status               String
+  billingInterval      String
+  amount               Float
+  stripeSubscriptionId String    @unique
+  stripeCustomerId     String
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model BillingTransaction {
+  id                    String   @id @default(uuid())
+  userId                String
+  type                  String
+  status                String
+  amount                Float
+  currency              String   @default("usd")
+  description           String?
+  stripePaymentIntentId String?
+  stripeSubscriptionId  String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advancia Pay Ledger — Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --surface: #0d1117;
+    --surface2: #131920;
+    --border: #1e2832;
+    --accent: #00e5a0;
+    --accent2: #0090ff;
+    --accent3: #f7931a;
+    --warn: #ff6b35;
+    --text: #e8edf2;
+    --muted: #5a6a7a;
+    --green: #00e5a0;
+    --red: #ff4466;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.015) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--accent);
+  }
+  .logo span { color: var(--text); }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .live-dot {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+
+  .live-dot::before {
+    content: '';
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,229,160,0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,229,160,0); }
+  }
+
+  .time-display {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 2px;
+    padding: 16px 28px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .main {
+    padding: 24px 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .kpi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .kpi-card:hover { border-color: rgba(0,229,160,0.3); }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .kpi-card.green::before { background: var(--green); }
+  .kpi-card.blue::before { background: var(--accent2); }
+  .kpi-card.orange::before { background: var(--accent3); }
+  .kpi-card.red::before { background: var(--warn); }
+
+  .kpi-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .kpi-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .up { color: var(--green); }
+  .down { color: var(--red); }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .panel-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .panel-title span {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+
+  .tx-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .tx-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0 0 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tx-table td {
+    padding: 12px 0;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(30,40,50,0.5);
+    vertical-align: middle;
+  }
+
+  .tx-table tr:last-child td { border-bottom: none; }
+  .tx-table tr:hover td { background: rgba(0,229,160,0.02); }
+
+  .tx-hash {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+  }
+
+  .tx-amount { font-weight: 700; }
+  .tx-amount.crypto { color: var(--accent3); }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .badge.confirmed { background: rgba(0,229,160,0.1); color: var(--green); border: 1px solid rgba(0,229,160,0.2); }
+  .badge.pending { background: rgba(247,147,26,0.1); color: var(--accent3); border: 1px solid rgba(247,147,26,0.2); }
+  .badge.processing { background: rgba(0,144,255,0.1); color: var(--accent2); border: 1px solid rgba(0,144,255,0.2); }
+  .badge.failed { background: rgba(255,68,102,0.1); color: var(--red); border: 1px solid rgba(255,68,102,0.2); }
+
+  .chain {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+  }
+
+  .chain.sol { color: #9945ff; border-color: rgba(153,69,255,0.3); background: rgba(153,69,255,0.08); }
+  .chain.eth { color: #627eea; border-color: rgba(98,126,234,0.3); background: rgba(98,126,234,0.08); }
+  .chain.matic { color: #8247e5; border-color: rgba(130,71,229,0.3); background: rgba(130,71,229,0.08); }
+  .chain.base { color: #0052ff; border-color: rgba(0,82,255,0.3); background: rgba(0,82,255,0.08); }
+  .chain.stripe { color: #635bff; border-color: rgba(99,91,255,0.3); background: rgba(99,91,255,0.08); }
+
+  .sparkline {
+    height: 40px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+  }
+
+  .spark-bar {
+    flex: 1;
+    background: rgba(0,229,160,0.2);
+    border-radius: 2px;
+    transition: height 0.3s;
+    min-height: 4px;
+  }
+
+  .deal-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .deal-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .deal-card:hover {
+    border-color: rgba(0,229,160,0.4);
+    transform: translateY(-2px);
+  }
+
+  .deal-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+
+  .deal-card.seed::after { background: var(--green); }
+  .deal-card.series::after { background: var(--accent2); }
+  .deal-card.partnership::after { background: var(--accent3); }
+
+  .deal-stage {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .deal-stage.seed { color: var(--green); }
+  .deal-stage.series { color: var(--accent2); }
+  .deal-stage.partnership { color: var(--accent3); }
+
+  .deal-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .deal-amount {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .deal-progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .deal-progress-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1s ease;
+  }
+
+  .deal-progress-fill.seed { background: var(--green); }
+  .deal-progress-fill.series { background: var(--accent2); }
+  .deal-progress-fill.partnership { background: var(--accent3); }
+
+  .deal-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .investor-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(30,40,50,0.5);
+    gap: 14px;
+  }
+
+  .investor-row:last-child { border-bottom: none; }
+
+  .investor-avatar {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .investor-info { flex: 1; }
+  .investor-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .investor-type { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); }
+
+  .investor-amount {
+    text-align: right;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .investor-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .flow-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .flow-node {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .flow-arrow {
+    font-size: 18px;
+    color: var(--muted);
+  }
+
+  .flow-node.source { border-color: var(--accent3); color: var(--accent3); background: rgba(247,147,26,0.06); }
+  .flow-node.processor { border-color: var(--accent2); color: var(--accent2); background: rgba(0,144,255,0.06); }
+  .flow-node.dest { border-color: var(--green); color: var(--green); background: rgba(0,229,160,0.06); }
+
+  .flow-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    padding: 2px 6px;
+    background: var(--surface2);
+    border-radius: 4px;
+  }
+
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 120px;
+    padding-top: 10px;
+  }
+
+  .bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+  }
+
+  .bar-inner {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .bar {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: height 1s ease;
+    min-height: 4px;
+  }
+
+  .bar.crypto { background: linear-gradient(180deg, var(--accent3), rgba(247,147,26,0.4)); }
+  .bar.fiat { background: linear-gradient(180deg, var(--accent2), rgba(0,144,255,0.4)); }
+  .bar.mixed { background: linear-gradient(180deg, var(--green), rgba(0,229,160,0.4)); }
+
+  .bar-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .wallet-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .wallet-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .wallet-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .wallet-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+
+  .wallet-balance {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .wallet-usd {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .report-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(30,40,50,0.5);
+  }
+
+  .report-row:last-child { border-bottom: none; }
+
+  .report-label {
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .report-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .report-value {
+    font-weight: 700;
+    font-size: 15px;
+    text-align: right;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section.active > * {
+    animation: fadeUp 0.35s ease forwards;
+  }
+
+  .section.active > *:nth-child(2) { animation-delay: 0.05s; }
+  .section.active > *:nth-child(3) { animation-delay: 0.1s; }
+  .section.active > *:nth-child(4) { animation-delay: 0.15s; }
+
+  .fund-meter { margin: 16px 0; }
+  .fund-bar {
+    height: 12px;
+    background: var(--surface2);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .fund-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--accent2));
+    border-radius: 100px;
+    transition: width 1.5s ease;
+  }
+  .fund-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .deal-grid { grid-template-columns: 1fr 1fr; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">Advancia<span> Pay Ledger</span></div>
+  <div class="topbar-right">
+    <div class="live-dot">LIVE</div>
+    <div class="time-display" id="clock">--:--:-- UTC</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('transactions', this)">Transactions</div>
+  <div class="tab" onclick="switchTab('crypto', this)">Crypto Flows</div>
+  <div class="tab" onclick="switchTab('deals', this)">Business Deals</div>
+  <div class="tab" onclick="switchTab('financials', this)">Financials</div>
+</div>
+
+<div class="main">
+  <div class="section active" id="transactions">
+    <div class="kpi-row">
+      <div class="kpi-card green"><div class="kpi-label">Total Volume (MTD)</div><div class="kpi-value">$247K</div><div class="kpi-sub up">↑ 42% vs last month</div></div>
+      <div class="kpi-card blue"><div class="kpi-label">Transactions (24h)</div><div class="kpi-value">1,284</div><div class="kpi-sub up">↑ 18 pending settlement</div></div>
+      <div class="kpi-card orange"><div class="kpi-label">Crypto Volume</div><div class="kpi-value">$89.4K</div><div class="kpi-sub">36% of total</div></div>
+      <div class="kpi-card red"><div class="kpi-label">Avg Settlement</div><div class="kpi-value">2.3s</div><div class="kpi-sub up">↑ Faster than last week</div></div>
+    </div>
+    <div class="grid-3">
+      <div class="panel">
+        <div class="panel-title">Live Transaction Feed <span id="tx-count">+3 new</span></div>
+        <table class="tx-table">
+          <thead><tr><th>TX ID</th><th>Facility</th><th>Chain</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody id="tx-body"></tbody>
+        </table>
+      </div>
+      <div>
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-title">Volume by Chain</div>
+          <div class="bar-chart">
+            <div class="bar-wrap"><div class="bar-inner"><div class="bar crypto" style="height:80%"></div></div><div class="bar-label">SOL</div></div>
+            <div class="bar-wrap"><div class="bar-inner"><div class="bar fiat" style="height:65%"></div></div><div class="bar-label">ETH</div></div>
+            <div class="bar-wrap"><div class="bar-inner"><div class="bar mixed" style="height:45%"></div></div><div class="bar-label">MATIC</div></div>
+            <div class="bar-wrap"><div class="bar-inner"><div class="bar crypto" style="height:30%"></div></div><div class="bar-label">BASE</div></div>
+            <div class="bar-wrap"><div class="bar-inner"><div class="bar fiat" style="height:90%"></div></div><div class="bar-label">FIAT</div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Success Rate</div>
+          <div style="font-size:36px;font-weight:800;letter-spacing:-1px;color:var(--green)">99.2%</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:6px">1,273 confirmed / 11 pending / 0 failed today</div>
+          <div class="sparkline" style="margin-top:14px">
+            <div class="spark-bar" style="height:70%"></div><div class="spark-bar" style="height:85%"></div><div class="spark-bar" style="height:60%"></div><div class="spark-bar" style="height:90%"></div><div class="spark-bar" style="height:75%"></div><div class="spark-bar" style="height:95%"></div><div class="spark-bar" style="height:80%"></div><div class="spark-bar" style="height:100%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="crypto">
+    <div class="kpi-row">
+      <div class="kpi-card orange"><div class="kpi-label">BTC Treasury</div><div class="kpi-value">12.45</div><div class="kpi-sub">≈ $1.09M USD</div></div>
+      <div class="kpi-card blue"><div class="kpi-label">ETH Holdings</div><div class="kpi-value">45.78</div><div class="kpi-sub">≈ $142K USD</div></div>
+      <div class="kpi-card green"><div class="kpi-label">USDT/USDC</div><div class="kpi-value">$125K</div><div class="kpi-sub">Stablecoin reserve</div></div>
+      <div class="kpi-card red"><div class="kpi-label">24h Crypto Flow</div><div class="kpi-value">$34.2K</div><div class="kpi-sub up">↑ 28% vs yesterday</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-title">Payment Flow Architecture</div>
+        <div class="flow-container">
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;">Patient → Facility</div>
+          <div class="flow-row"><div class="flow-node source">Patient Wallet</div><div class="flow-arrow">→</div><div class="flow-amount">SOL/ETH</div><div class="flow-arrow">→</div><div class="flow-node processor">Advancia<br>Gateway</div><div class="flow-arrow">→</div><div class="flow-amount">USDC</div><div class="flow-arrow">→</div><div class="flow-node dest">Facility<br>Account</div></div>
+          <div style="border-top:1px solid var(--border);margin:14px 0;"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;">Insurance → Facility</div>
+          <div class="flow-row"><div class="flow-node source">Insurance<br>Payer</div><div class="flow-arrow">→</div><div class="flow-amount">ACH/Wire</div><div class="flow-arrow">→</div><div class="flow-node processor">Stripe<br>Connect</div><div class="flow-arrow">→</div><div class="flow-amount">USD</div><div class="flow-arrow">→</div><div class="flow-node dest">Facility<br>Bank</div></div>
+          <div style="border-top:1px solid var(--border);margin:14px 0;"></div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase;">Platform Revenue (2.5% fee)</div>
+          <div class="flow-row"><div class="flow-node source">All Txns</div><div class="flow-arrow">→</div><div class="flow-amount">2.5%</div><div class="flow-arrow">→</div><div class="flow-node processor">Fee<br>Splitter</div><div class="flow-arrow">→</div><div class="flow-node dest">Advancia<br>Treasury</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="panel" style="margin-bottom:16px;">
+          <div class="panel-title">Multi-Chain Wallets</div>
+          <div class="wallet-grid">
+            <div class="wallet-item"><div class="wallet-icon" style="background:rgba(153,69,255,0.1);">◎</div><div><div class="wallet-name">SOLANA</div><div class="wallet-balance">4,892 SOL</div><div class="wallet-usd">≈ $58.7K</div></div></div>
+            <div class="wallet-item"><div class="wallet-icon" style="background:rgba(98,126,234,0.1);">Ξ</div><div><div class="wallet-name">ETHEREUM</div><div class="wallet-balance">18.4 ETH</div><div class="wallet-usd">≈ $57.1K</div></div></div>
+            <div class="wallet-item"><div class="wallet-icon" style="background:rgba(130,71,229,0.1);">⬡</div><div><div class="wallet-name">POLYGON</div><div class="wallet-balance">24,100 MATIC</div><div class="wallet-usd">≈ $20.2K</div></div></div>
+            <div class="wallet-item"><div class="wallet-icon" style="background:rgba(0,82,255,0.1);">🔵</div><div><div class="wallet-name">BASE</div><div class="wallet-balance">1,200 USDC</div><div class="wallet-usd">≈ $1.2K</div></div></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Settlement Speed</div>
+          <div class="flow-container" style="gap:8px">
+            <div class="flow-row" style="justify-content:space-between"><span style="font-size:12px;">Solana</span><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green)">~0.4s</span></div>
+            <div class="flow-row" style="justify-content:space-between"><span style="font-size:12px;">Polygon</span><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green)">~2s</span></div>
+            <div class="flow-row" style="justify-content:space-between"><span style="font-size:12px;">Base (L2)</span><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent2)">~5s</span></div>
+            <div class="flow-row" style="justify-content:space-between"><span style="font-size:12px;">Ethereum</span><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent3)">~12s</span></div>
+            <div class="flow-row" style="justify-content:space-between"><span style="font-size:12px;">Stripe/ACH</span><span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">1-2 days</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="deals">
+    <div class="deal-grid">
+      <div class="deal-card seed"><div class="deal-stage seed">● Seed Round</div><div class="deal-name">Series Seed Fundraise</div><div class="deal-amount">$1.5M</div><div class="deal-progress-bar"><div class="deal-progress-fill seed" style="width:47%"></div></div><div class="deal-meta"><span>$705K committed</span><span>47% of target</span></div><div style="margin-top:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">$8M POST-MONEY · 18.75% DILUTION</div></div>
+      <div class="deal-card partnership"><div class="deal-stage partnership">● Partnership</div><div class="deal-name">Hospital Network JV</div><div class="deal-amount">$320K/yr</div><div class="deal-progress-bar"><div class="deal-progress-fill partnership" style="width:70%"></div></div><div class="deal-meta"><span>Term sheet signed</span><span>Legal review</span></div><div style="margin-top:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">24 FACILITIES · HIPAA COMPLIANT</div></div>
+      <div class="deal-card series"><div class="deal-stage series">● Pipeline</div><div class="deal-name">Series A Prep</div><div class="deal-amount">$5–8M</div><div class="deal-progress-bar"><div class="deal-progress-fill series" style="width:15%"></div></div><div class="deal-meta"><span>Target Q3 2026</span><span>Early conversations</span></div><div style="margin-top:12px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">$25M+ PRE-MONEY TARGET</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-title">Investor Pipeline</div>
+        <div class="investor-row"><div class="investor-avatar" style="background:rgba(0,229,160,0.1);color:var(--green)">HC</div><div class="investor-info"><div class="investor-name">HealthCare Ventures</div><div class="investor-type">Lead · VC Fund</div></div><div><div class="investor-amount" style="color:var(--green)">$300K</div><div class="investor-status"><span class="badge confirmed">COMMITTED</span></div></div></div>
+        <div class="investor-row"><div class="investor-avatar" style="background:rgba(0,144,255,0.1);color:var(--accent2)">FT</div><div class="investor-info"><div class="investor-name">FinTech Angels NYC</div><div class="investor-type">Angel Group</div></div><div><div class="investor-amount" style="color:var(--accent2)">$150K</div><div class="investor-status"><span class="badge confirmed">COMMITTED</span></div></div></div>
+        <div class="investor-row"><div class="investor-avatar" style="background:rgba(247,147,26,0.1);color:var(--accent3)">BX</div><div class="investor-info"><div class="investor-name">BlockX Capital</div><div class="investor-type">Crypto VC</div></div><div><div class="investor-amount" style="color:var(--accent3)">$255K</div><div class="investor-status"><span class="badge pending">DUE DILIGENCE</span></div></div></div>
+        <div class="investor-row"><div class="investor-avatar" style="background:rgba(90,106,122,0.2);color:var(--muted)">SC</div><div class="investor-info"><div class="investor-name">Strategic Corp Partner</div><div class="investor-type">Strategic · Hospital Chain</div></div><div><div class="investor-amount" style="color:var(--muted)">$500K</div><div class="investor-status"><span class="badge processing">IN TALKS</span></div></div></div>
+        <div class="investor-row"><div class="investor-avatar" style="background:rgba(90,106,122,0.1);color:var(--muted)">GP</div><div class="investor-info"><div class="investor-name">Grant Programs (NSF)</div><div class="investor-type">Non-Dilutive</div></div><div><div class="investor-amount" style="color:var(--muted)">$295K</div><div class="investor-status"><span class="badge pending">APPLIED</span></div></div></div>
+        <div style="margin-top:16px"><div class="fund-meter"><div class="fund-bar"><div class="fund-fill" style="width:47%"></div></div><div class="fund-labels"><span>$705K raised</span><span>$795K remaining</span><span>$1.5M target</span></div></div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Deal Terms Summary</div>
+        <div class="report-row"><div><div class="report-label">Round Type</div><div class="report-sub">Priced Equity</div></div><div class="report-value" style="color:var(--green)">Seed</div></div>
+        <div class="report-row"><div><div class="report-label">Pre-Money Valuation</div><div class="report-sub">Negotiated cap table</div></div><div class="report-value">$6.5M</div></div>
+        <div class="report-row"><div><div class="report-label">Post-Money Valuation</div><div class="report-sub">After full raise</div></div><div class="report-value">$8.0M</div></div>
+        <div class="report-row"><div><div class="report-label">Founder Equity Retained</div><div class="report-sub">Post-raise</div></div><div class="report-value" style="color:var(--green)">81.25%</div></div>
+        <div class="report-row"><div><div class="report-label">Investor Dilution</div><div class="report-sub">This round</div></div><div class="report-value">18.75%</div></div>
+        <div class="report-row"><div><div class="report-label">Pro-Rata Rights</div><div class="report-sub">Lead investors only</div></div><div class="report-value" style="color:var(--accent2)">Yes</div></div>
+        <div class="report-row"><div><div class="report-label">Board Composition</div><div class="report-sub">Post-close</div></div><div class="report-value">3F / 1I</div></div>
+        <div class="report-row"><div><div class="report-label">Minimum Check Size</div></div><div class="report-value">$25K</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="financials">
+    <div class="kpi-row">
+      <div class="kpi-card green"><div class="kpi-label">MRR</div><div class="kpi-value">$247K</div><div class="kpi-sub up">↑ 42% MoM growth</div></div>
+      <div class="kpi-card blue"><div class="kpi-label">ARR (Projected)</div><div class="kpi-value">$2.96M</div><div class="kpi-sub">24 facilities</div></div>
+      <div class="kpi-card orange"><div class="kpi-label">Gross Margin</div><div class="kpi-value">68%</div><div class="kpi-sub up">After processing fees</div></div>
+      <div class="kpi-card red"><div class="kpi-label">Burn Rate</div><div class="kpi-value">$38K</div><div class="kpi-sub">Per month</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-title">Revenue Breakdown</div>
+        <div class="report-row"><div><div class="report-label">SaaS Subscriptions</div><div class="report-sub">24 facilities × avg $6.2K/mo</div></div><div class="report-value" style="color:var(--green)">$148.8K</div></div>
+        <div class="report-row"><div><div class="report-label">Transaction Fees (Crypto)</div><div class="report-sub">2.5% on $3.57M volume</div></div><div class="report-value" style="color:var(--accent3)">$89.3K</div></div>
+        <div class="report-row"><div><div class="report-label">Fiat Processing Fees</div><div class="report-sub">1.8% on traditional payments</div></div><div class="report-value" style="color:var(--accent2)">$8.9K</div></div>
+        <div class="report-row"><div><div class="report-label">API Access Fees</div><div class="report-sub">Developer tier integrations</div></div><div class="report-value">$0</div></div>
+        <div style="border-top:2px solid var(--border);padding-top:14px;margin-top:4px;display:flex;justify-content:space-between;align-items:center"><div style="font-weight:700;font-size:15px">Total MRR</div><div style="font-weight:800;font-size:20px;color:var(--green)">$247K</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">3-Year Projections</div>
+        <div class="report-row"><div><div class="report-label">Year 1 (Current)</div><div class="report-sub">24 facilities</div></div><div class="report-value" style="color:var(--green)">$2.96M ARR</div></div>
+        <div class="report-row"><div><div class="report-label">Year 2 (Conservative)</div><div class="report-sub">80 facilities target</div></div><div class="report-value" style="color:var(--accent2)">$9.8M ARR</div></div>
+        <div class="report-row"><div><div class="report-label">Year 3 (Conservative)</div><div class="report-sub">200+ facilities</div></div><div class="report-value" style="color:var(--accent3)">$24.5M ARR</div></div>
+        <div style="border-top:1px solid var(--border);margin:14px 0;"></div>
+        <div class="report-row"><div><div class="report-label">CAC (avg)</div></div><div class="report-value">$4,200</div></div>
+        <div class="report-row"><div><div class="report-label">LTV (avg facility)</div></div><div class="report-value" style="color:var(--green)">$186K</div></div>
+        <div class="report-row"><div><div class="report-label">LTV:CAC Ratio</div></div><div class="report-value" style="color:var(--green)">44.3x</div></div>
+        <div class="report-row"><div><div class="report-label">Payback Period</div></div><div class="report-value">~5 months</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Monthly Revenue Trend</div>
+      <div class="bar-chart" style="height:140px">
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar fiat" style="height:18%"></div></div><div class="bar-label">Aug</div></div>
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar fiat" style="height:24%"></div></div><div class="bar-label">Sep</div></div>
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar fiat" style="height:32%"></div></div><div class="bar-label">Oct</div></div>
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar mixed" style="height:38%"></div></div><div class="bar-label">Nov</div></div>
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar mixed" style="height:47%"></div></div><div class="bar-label">Dec</div></div>
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar mixed" style="height:55%"></div></div><div class="bar-label">Jan</div></div>
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar crypto" style="height:68%"></div></div><div class="bar-label">Feb</div></div>
+        <div class="bar-wrap"><div class="bar-inner"><div class="bar crypto" style="height:100%"></div></div><div class="bar-label">Mar ▲</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toUTCString().split(' ')[4] + ' UTC';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function switchTab(id, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+const facilities = ['Mt. Sinai Medical', 'Johns Hopkins', 'Cedar Health', 'Riverside Clinic', 'Bay Area Hosp.', 'Northwestern Med', 'Lakeside Health', 'Sunrise Hospital'];
+const chains = ['sol','eth','matic','base','stripe'];
+const chainLabels = { sol:'SOL', eth:'ETH', matic:'MATIC', base:'BASE', stripe:'STRIPE' };
+const statuses = ['confirmed','confirmed','confirmed','pending','processing'];
+
+function randomTx() {
+  const chain = chains[Math.floor(Math.random() * chains.length)];
+  const isCrypto = chain !== 'stripe';
+  const amount = isCrypto ? (Math.random() * 8 + 0.5).toFixed(4) + ' ' + chainLabels[chain] : '$' + (Math.random() * 4000 + 200).toFixed(2);
+  const status = statuses[Math.floor(Math.random() * statuses.length)];
+  const hash = '0x' + Math.random().toString(16).slice(2, 10).toUpperCase();
+  const facility = facilities[Math.floor(Math.random() * facilities.length)];
+  return { hash, facility, chain, amount, status, isCrypto };
+}
+
+function renderTx(tx) {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><span class="tx-hash">${tx.hash}</span></td>
+    <td style="font-size:12px">${tx.facility}</td>
+    <td><span class="chain ${tx.chain}">${chainLabels[tx.chain]}</span></td>
+    <td><span class="tx-amount ${tx.isCrypto ? 'crypto' : ''}">${tx.amount}</span></td>
+    <td><span class="badge ${tx.status}">${tx.status.toUpperCase()}</span></td>
+  `;
+  tr.style.animation = 'fadeUp 0.3s ease';
+  return tr;
+}
+
+const txBody = document.getElementById('tx-body');
+const txCount = document.getElementById('tx-count');
+let count = 0;
+
+for (let i = 0; i < 8; i += 1) {
+  txBody.appendChild(renderTx(randomTx()));
+}
+
+setInterval(() => {
+  const tx = randomTx();
+  const row = renderTx(tx);
+  txBody.insertBefore(row, txBody.firstChild);
+  if (txBody.children.length > 10) {
+    txBody.removeChild(txBody.lastChild);
+  }
+  count += 1;
+  txCount.textContent = `+${count} new`;
+}, 3000);
+</script>
+</body>
+</html>

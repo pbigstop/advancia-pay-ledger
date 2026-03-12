@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advancia Healthcare — Smarter Payments for Modern Healthcare</title>
+  <meta name="description" content="Multi-blockchain payment processing built for healthcare. Accept SOL, ETH, MATIC, and traditional payments with HIPAA compliance. Trusted by 24 facilities. $247K MRR.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://advancia-healthcare.com">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Advancia Healthcare — Smarter Payments for Modern Healthcare">
+  <meta property="og:description" content="Accept crypto and traditional payments with full HIPAA compliance. Trusted by 24 facilities.">
+  <meta property="og:url" content="https://advancia-healthcare.com">
+  <meta property="og:type" content="website">
+  
+  <style>
+    :root {
+      --sky: #0ea5e9;
+      --sky-dark: #0284c7;
+      --navy: #0c4a6e;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --slate: #0f172a;
+      --muted: #475569;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --radius: 14px;
+      --shadow: 0 4px 32px rgba(14,165,233,0.12);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--slate);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(14,165,233,0.1);
+      padding: 0 5%;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--navy), var(--sky));
+      border-radius: 10px;
+      display: grid; place-items: center;
+      font-weight: 900; font-size: 20px; color: white;
+      letter-spacing: -1px;
+    }
+    .logo-name { font-size: 16px; font-weight: 700; color: var(--navy); }
+    .logo-tag { font-size: 10px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--sky); }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+    .btn-ghost { color: var(--navy); background: transparent; }
+    .btn-ghost:hover { background: var(--bg); }
+    .btn-primary { background: var(--sky); color: white; }
+    .btn-primary:hover { background: var(--sky-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(14,165,233,0.35); }
+    .btn-lg { padding: 16px 36px; font-size: 16px; border-radius: 12px; }
+    .btn-outline { border: 2px solid rgba(255,255,255,0.4); color: white; background: transparent; }
+    .btn-outline:hover { background: rgba(255,255,255,0.15); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, var(--navy) 0%, #1e3a5f 40%, #0f4c6e 70%, var(--sky) 100%);
+      display: flex; align-items: center;
+      padding: 100px 5% 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 800px 600px at 70% 50%, rgba(14,165,233,0.15) 0%, transparent 70%);
+    }
+    .hero-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px; padding: 8px 16px;
+      font-size: 13px; color: rgba(255,255,255,0.9);
+      margin-bottom: 24px;
+    }
+    .badge-dot { width: 6px; height: 6px; background: var(--emerald); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    .hero h1 { font-size: 58px; font-weight: 800; color: white; line-height: 1.1; letter-spacing: -2px; margin-bottom: 24px; }
+    .hero h1 span { color: var(--sky); }
+    .hero p { font-size: 18px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 40px; max-width: 480px; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 40px; margin-top: 56px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .hero-stat-val { font-size: 30px; font-weight: 800; color: white; }
+    .hero-stat-lbl { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+    .hero-visual {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px; padding: 24px;
+      backdrop-filter: blur(10px);
+    }
+    .dashboard-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .dashboard-title { color: white; font-weight: 700; font-size: 16px; }
+    .status-dot { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--emerald); }
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .metric-card {
+      background: rgba(255,255,255,0.07);
+      border-radius: 12px; padding: 16px;
+    }
+    .metric-val { font-size: 22px; font-weight: 800; color: white; }
+    .metric-lbl { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+    .metric-change { font-size: 12px; color: var(--emerald); margin-top: 4px; }
+    .tx-feed { display: flex; flex-direction: column; gap: 8px; }
+    .tx-item {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px; padding: 12px 16px;
+      font-size: 13px;
+    }
+    .tx-left { display: flex; align-items: center; gap: 10px; }
+    .tx-icon { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-size: 14px; }
+    .tx-name { color: white; font-weight: 500; }
+    .tx-time { color: rgba(255,255,255,0.4); font-size: 11px; }
+    .tx-amount { font-weight: 700; color: var(--emerald); }
+    .chain-badge { font-size: 10px; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.06); border-radius: 4px; padding: 2px 6px; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: var(--bg);
+      border-bottom: 1px solid #e2e8f0;
+      padding: 18px 5%;
+    }
+    .trust-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center; gap: 48px; flex-wrap: wrap;
+    }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); font-weight: 500; }
+    .trust-icon { font-size: 16px; }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 5%; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--sky); margin-bottom: 14px; }
+    .section-title { font-size: 44px; font-weight: 800; color: var(--navy); line-height: 1.15; letter-spacing: -1px; margin-bottom: 16px; }
+    .section-sub { font-size: 18px; color: var(--muted); max-width: 560px; line-height: 1.7; }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* ── FEATURE GRID ── */
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+    .feature-card {
+      background: white; border: 1px solid #e2e8f0; border-radius: var(--radius); padding: 32px;
+      transition: all 0.2s;
+    }
+    .feature-card:hover { border-color: var(--sky); box-shadow: var(--shadow); transform: translateY(-2px); }
+    .feature-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; margin-bottom: 20px; }
+    .icon-sky { background: #e0f2fe; }
+    .icon-emerald { background: #d1fae5; }
+    .icon-amber { background: #fef3c7; }
+    .icon-violet { background: #ede9fe; }
+    .icon-rose { background: #ffe4e6; }
+    .icon-slate { background: #f1f5f9; }
+    .feature-card h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── BLOCKCHAIN SECTION ── */
+    .blockchain-section { background: var(--navy); }
+    .chain-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 56px; }
+    .chain-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius); padding: 28px 24px; text-align: center;
+      transition: all 0.2s;
+    }
+    .chain-card:hover { background: rgba(255,255,255,0.1); border-color: var(--sky); }
+    .chain-logo { font-size: 36px; margin-bottom: 14px; }
+    .chain-name { font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
+    .chain-stat { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .chain-speed { font-size: 13px; color: var(--emerald); font-weight: 600; margin-top: 8px; }
+    .chain-section-title { color: white; }
+    .chain-section-sub { color: rgba(255,255,255,0.65); }
+
+    /* ── PRICING ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+    .price-card {
+      border: 2px solid #e2e8f0; border-radius: var(--radius); padding: 40px 32px;
+      position: relative; transition: all 0.2s;
+    }
+    .price-card:hover { border-color: var(--sky); box-shadow: var(--shadow); }
+    .price-card.featured { border-color: var(--sky); background: #f0f9ff; }
+    .featured-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--sky); color: white; font-size: 12px; font-weight: 700;
+      padding: 6px 20px; border-radius: 50px; white-space: nowrap;
+    }
+    .price-tier { font-size: 13px; font-weight: 700; color: var(--sky); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .price-amount { font-size: 48px; font-weight: 900; color: var(--navy); letter-spacing: -2px; }
+    .price-period { font-size: 16px; color: var(--muted); }
+    .price-desc { font-size: 14px; color: var(--muted); margin: 16px 0 28px; line-height: 1.6; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .price-features li { font-size: 14px; color: var(--slate); display: flex; gap: 10px; align-items: flex-start; }
+    .check { color: var(--emerald); font-weight: 700; flex-shrink: 0; }
+    .btn-full { display: block; text-align: center; width: 100%; }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 64px; }
+    .testi-card {
+      background: white; border: 1px solid #e2e8f0; border-radius: var(--radius); padding: 32px;
+    }
+    .testi-quote { font-size: 15px; color: var(--slate); line-height: 1.7; margin-bottom: 24px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--sky));
+      display: grid; place-items: center;
+      font-weight: 800; font-size: 16px; color: white;
+    }
+    .author-name { font-weight: 700; font-size: 14px; color: var(--navy); }
+    .author-title { font-size: 12px; color: var(--muted); }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--sky) 100%);
+      text-align: center;
+    }
+    .cta-section .section-title { color: white; }
+    .cta-section p { color: rgba(255,255,255,0.8); font-size: 18px; max-width: 540px; margin: 16px auto 40px; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: white; color: var(--navy); }
+    .btn-white:hover { background: #f0f9ff; transform: translateY(-1px); }
+
+    /* ── COMPLIANCE BADGES ── */
+    .compliance-bar {
+      background: var(--bg); border-top: 1px solid #e2e8f0;
+      padding: 24px 5%;
+    }
+    .compliance-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap;
+    }
+    .comp-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: white; border: 1px solid #e2e8f0;
+      border-radius: 8px; padding: 10px 18px;
+      font-size: 12px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px;
+    }
+    .comp-icon { color: var(--emerald); font-size: 16px; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--navy); padding: 72px 5% 40px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.7; margin-top: 16px; max-width: 280px; }
+    .footer-section h4 { color: white; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; }
+    .footer-section a { display: block; color: rgba(255,255,255,0.55); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color 0.2s; }
+    .footer-section a:hover { color: var(--sky); }
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 13px; }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-link {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      display: grid; place-items: center;
+      color: rgba(255,255,255,0.6); text-decoration: none; font-size: 15px;
+      transition: all 0.2s;
+    }
+    .social-link:hover { background: var(--sky); color: white; }
+
+    @media (max-width: 768px) {
+      .hero-grid, .feature-grid, .chain-grid, .pricing-grid, .testi-grid, .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 { font-size: 36px; }
+      .section-title { font-size: 32px; }
+      .nav-links, .hero-visual { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-mark">A</div>
+      <div>
+        <div class="logo-name">Advancia Healthcare</div>
+        <div class="logo-tag">advancia-healthcare.com</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#blockchain">Blockchain</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="https://docs.advancia-healthcare.com">Docs</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://app.advancia-healthcare.com/login" class="btn btn-ghost">Login</a>
+      <a href="https://app.advancia-healthcare.com/register" class="btn btn-primary">Get Started Free →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        24 facilities processing payments right now
+      </div>
+      <h1>Healthcare Payments<br>Built for the <span>Crypto Era</span></h1>
+      <p>Accept SOL, ETH, MATIC, and traditional payments in one unified platform. HIPAA-compliant, instant settlement, and up to 80% lower fees than traditional processors.</p>
+      <div class="hero-ctas">
+        <a href="https://app.advancia-healthcare.com/register" class="btn btn-primary btn-lg">Start Free Trial →</a>
+        <a href="#" class="btn btn-outline btn-lg">Watch Demo</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-val">$247K</div>
+          <div class="hero-stat-lbl">Monthly Revenue</div>
+        </div>
+        <div>
+          <div class="hero-stat-val">24</div>
+          <div class="hero-stat-lbl">Facilities</div>
+        </div>
+        <div>
+          <div class="hero-stat-val">42%</div>
+          <div class="hero-stat-lbl">MoM Growth</div>
+        </div>
+        <div>
+          <div class="hero-stat-val">0.8%</div>
+          <div class="hero-stat-lbl">Transaction Fee</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="dashboard-header">
+        <div class="dashboard-title">Live Payment Feed</div>
+        <div class="status-dot">● Live</div>
+      </div>
+      <div class="metric-grid">
+        <div class="metric-card">
+          <div class="metric-val">$14,230</div>
+          <div class="metric-lbl">Today's Revenue</div>
+          <div class="metric-change">↑ 12% vs yesterday</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">47</div>
+          <div class="metric-lbl">Transactions</div>
+          <div class="metric-change">↑ 8 since yesterday</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">68%</div>
+          <div class="metric-lbl">Crypto Volume</div>
+          <div class="metric-change">↑ Growing</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">$302</div>
+          <div class="metric-lbl">Avg Transaction</div>
+          <div class="metric-change">Avg per payment</div>
+        </div>
+      </div>
+      <div class="tx-feed">
+        <div class="tx-item">
+          <div class="tx-left">
+            <div class="tx-icon icon-sky">◎</div>
+            <div>
+              <div class="tx-name">Memorial Clinic</div>
+              <div class="tx-time">2 min ago · <span class="chain-badge">Solana</span></div>
+            </div>
+          </div>
+          <div class="tx-amount">+$1,250</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-left">
+            <div class="tx-icon icon-emerald">Ξ</div>
+            <div>
+              <div class="tx-name">CareFirst Med</div>
+              <div class="tx-time">8 min ago · <span class="chain-badge">Ethereum</span></div>
+            </div>
+          </div>
+          <div class="tx-amount">+$890</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-left">
+            <div class="tx-icon icon-violet">⬡</div>
+            <div>
+              <div class="tx-name">HealthFirst UC</div>
+              <div class="tx-time">14 min ago · <span class="chain-badge">Polygon</span></div>
+            </div>
+          </div>
+          <div class="tx-amount">+$445</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-left">
+            <div class="tx-icon icon-amber">💳</div>
+            <div>
+              <div class="tx-name">Sunrise Dental</div>
+              <div class="tx-time">21 min ago · <span class="chain-badge">Card</span></div>
+            </div>
+          </div>
+          <div class="tx-amount">+$320</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item"><span class="trust-icon">🏥</span> 24 Healthcare Facilities</div>
+    <div class="trust-item"><span class="trust-icon">🔐</span> HIPAA Compliant</div>
+    <div class="trust-item"><span class="trust-icon">💳</span> PCI-DSS Certified</div>
+    <div class="trust-item"><span class="trust-icon">⚡</span> 99.97% Uptime</div>
+    <div class="trust-item"><span class="trust-icon">🌐</span> 4 Blockchain Networks</div>
+    <div class="trust-item"><span class="trust-icon">⏱️</span> &lt;2 Min Settlement</div>
+  </div>
+</div>
+
+<!-- ── FEATURES ── -->
+<section id="features">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-label">Platform Features</div>
+      <h2 class="section-title">Everything Your Facility Needs</h2>
+      <p class="section-sub">From multi-blockchain payments to patient management and real-time analytics — all in one platform.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon icon-sky">⚡</div>
+        <h3>Multi-Blockchain Payments</h3>
+        <p>Accept SOL, ETH, MATIC, and Base ETH alongside traditional card and ACH payments. Instant settlement, 80% lower fees.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-emerald">🏥</div>
+        <h3>Facility Management</h3>
+        <p>Manage patients, appointments, staff, and medical records in one HIPAA-compliant platform. Replace 5+ separate systems.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-amber">📊</div>
+        <h3>Real-Time Analytics</h3>
+        <p>Live revenue dashboards, payment trends, crypto vs fiat breakdowns, and predictive cash flow forecasting.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-violet">🔒</div>
+        <h3>HIPAA Security</h3>
+        <p>AES-256 PHI encryption, complete audit trails, role-based access control, and automated compliance reporting.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-rose">📄</div>
+        <h3>Smart Invoicing</h3>
+        <p>Auto-generate invoices, send crypto or card payment links to patients, and reconcile automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-slate">🔌</div>
+        <h3>EHR Integrations</h3>
+        <p>Connect with Epic, Cerner, and other EHR systems via our REST API. Sync patient data automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BLOCKCHAIN ── -->
+<section class="blockchain-section" id="blockchain">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-label" style="color: var(--sky);">Supported Networks</div>
+      <h2 class="section-title chain-section-title">4 Blockchains, One Platform</h2>
+      <p class="section-sub chain-section-sub">Your patients choose their preferred crypto. You receive instant settlement in USD or hold as crypto.</p>
+    </div>
+    <div class="chain-grid">
+      <div class="chain-card">
+        <div class="chain-logo">◎</div>
+        <div class="chain-name">Solana</div>
+        <div class="chain-stat">Ultra-low fees · High throughput</div>
+        <div class="chain-speed">⚡ ~400ms confirmation</div>
+      </div>
+      <div class="chain-card">
+        <div class="chain-logo">Ξ</div>
+        <div class="chain-name">Ethereum</div>
+        <div class="chain-stat">Most trusted blockchain</div>
+        <div class="chain-speed">⚡ ~12 sec confirmation</div>
+      </div>
+      <div class="chain-card">
+        <div class="chain-logo">⬡</div>
+        <div class="chain-name">Polygon</div>
+        <div class="chain-stat">Fast + affordable L2</div>
+        <div class="chain-speed">⚡ ~2 sec confirmation</div>
+      </div>
+      <div class="chain-card">
+        <div class="chain-logo">🔵</div>
+        <div class="chain-name">Base</div>
+        <div class="chain-stat">Coinbase's L2 network</div>
+        <div class="chain-speed">⚡ ~2 sec confirmation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section id="pricing">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-label">Pricing</div>
+      <h2 class="section-title">Transparent, Simple Pricing</h2>
+      <p class="section-sub">No hidden fees. Cancel anytime. All plans include HIPAA compliance and multi-blockchain support.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div><span class="price-amount">$499</span><span class="price-period">/month</span></div>
+        <p class="price-desc">For small clinics just getting started with digital payments.</p>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Up to 200 transactions/month</li>
+          <li><span class="check">✓</span> 2 blockchain networks</li>
+          <li><span class="check">✓</span> Basic analytics</li>
+          <li><span class="check">✓</span> 5 staff users</li>
+          <li><span class="check">✓</span> Email support</li>
+          <li><span class="check">✓</span> HIPAA compliance</li>
+        </ul>
+        <a href="https://app.advancia-healthcare.com/register?plan=starter" class="btn btn-outline btn-full" style="border: 2px solid var(--sky); color: var(--sky);">Get Started</a>
+      </div>
+      <div class="price-card featured">
+        <div class="featured-badge">Most Popular</div>
+        <div class="price-tier">Growth</div>
+        <div><span class="price-amount">$1,299</span><span class="price-period">/month</span></div>
+        <p class="price-desc">For established facilities processing significant payment volume.</p>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Unlimited transactions</li>
+          <li><span class="check">✓</span> All 4 blockchain networks</li>
+          <li><span class="check">✓</span> Advanced analytics + reports</li>
+          <li><span class="check">✓</span> 25 staff users</li>
+          <li><span class="check">✓</span> Priority 24/7 support</li>
+          <li><span class="check">✓</span> EHR integrations</li>
+          <li><span class="check">✓</span> Patient portal</li>
+        </ul>
+        <a href="https://app.advancia-healthcare.com/register?plan=growth" class="btn btn-primary btn-full">Get Started →</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Enterprise</div>
+        <div><span class="price-amount">Custom</span></div>
+        <p class="price-desc">For hospital networks and multi-facility healthcare organizations.</p>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Everything in Growth</li>
+          <li><span class="check">✓</span> Unlimited users & facilities</li>
+          <li><span class="check">✓</span> Custom integrations</li>
+          <li><span class="check">✓</span> Dedicated success manager</li>
+          <li><span class="check">✓</span> SLA guarantee</li>
+          <li><span class="check">✓</span> On-premise deployment option</li>
+          <li><span class="check">✓</span> White-label option</li>
+        </ul>
+        <a href="mailto:sales@advancia-healthcare.com" class="btn btn-outline btn-full" style="border: 2px solid var(--sky); color: var(--sky);">Contact Sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials" style="background: var(--bg);">
+  <div class="section-inner">
+    <div class="text-center">
+      <div class="section-label">Customer Stories</div>
+      <h2 class="section-title">Trusted by Healthcare Leaders</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-quote">"We cut our payment processing fees by 73% in the first month. Our patients love paying with crypto, and the HIPAA compliance gives us total peace of mind."</p>
+        <div class="testi-author">
+          <div class="author-avatar">SC</div>
+          <div>
+            <div class="author-name">Dr. Sarah Chen</div>
+            <div class="author-title">Medical Director, WellCare Clinic</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"The analytics dashboard is phenomenal. We can see crypto vs traditional payments in real-time. Revenue up 28% since switching to Advancia Healthcare."</p>
+        <div class="testi-author">
+          <div class="author-avatar">MR</div>
+          <div>
+            <div class="author-name">Michael Rodriguez</div>
+            <div class="author-title">CFO, HealthFirst Medical Group</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <p class="testi-quote">"Setup took 15 minutes. The onboarding was seamless and the support team was incredibly responsive. Best healthcare payment solution on the market."</p>
+        <div class="testi-author">
+          <div class="author-avatar">JP</div>
+          <div>
+            <div class="author-name">Jennifer Park</div>
+            <div class="author-title">Operations Director, Summit Urgent Care</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="section-inner text-center">
+    <h2 class="section-title">Ready to Transform Your Healthcare Payments?</h2>
+    <p>Join 24 facilities already processing payments with Advancia Healthcare. Start your free trial today — no credit card required.</p>
+    <div class="cta-btns">
+      <a href="https://app.advancia-healthcare.com/register" class="btn btn-white btn-lg">Start Free Trial →</a>
+      <a href="mailto:demo@advancia-healthcare.com" class="btn btn-outline btn-lg">Schedule a Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPLIANCE ── -->
+<div class="compliance-bar">
+  <div class="compliance-inner">
+    <div class="comp-badge"><span class="comp-icon">🔒</span> HIPAA Compliant</div>
+    <div class="comp-badge"><span class="comp-icon">✅</span> PCI-DSS Level 1</div>
+    <div class="comp-badge"><span class="comp-icon">🛡️</span> SOC 2 Type II</div>
+    <div class="comp-badge"><span class="comp-icon">⚡</span> 99.97% Uptime SLA</div>
+    <div class="comp-badge"><span class="comp-icon">🔐</span> AES-256 Encryption</div>
+    <div class="comp-badge"><span class="comp-icon">📋</span> Audit Trail Included</div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo">
+        <div class="logo-mark">A</div>
+        <div>
+          <div class="logo-name" style="color:white;">Advancia Healthcare</div>
+          <div class="logo-tag">advancia-healthcare.com</div>
+        </div>
+      </a>
+      <p>The most advanced healthcare payment platform. Accept crypto and traditional payments with full HIPAA compliance. Trusted by 24 facilities.</p>
+    </div>
+    <div class="footer-section">
+      <h4>Product</h4>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="https://docs.advancia-healthcare.com">API Docs</a>
+      <a href="https://status.advancia-healthcare.com">System Status</a>
+      <a href="#blockchain">Blockchain Support</a>
+    </div>
+    <div class="footer-section">
+      <h4>Company</h4>
+      <a href="/about">About Us</a>
+      <a href="/careers">Careers</a>
+      <a href="/blog">Blog</a>
+      <a href="mailto:press@advancia-healthcare.com">Press</a>
+      <a href="mailto:investors@advancia-healthcare.com">Investors</a>
+    </div>
+    <div class="footer-section">
+      <h4>Support</h4>
+      <a href="https://docs.advancia-healthcare.com">Documentation</a>
+      <a href="mailto:support@advancia-healthcare.com">Email Support</a>
+      <a href="mailto:billing@advancia-healthcare.com">Billing</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/hipaa">HIPAA Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Advancia Healthcare · advancia-healthcare.com · All rights reserved.</p>
+    <div class="footer-socials">
+      <a href="#" class="social-link" title="Twitter">𝕏</a>
+      <a href="#" class="social-link" title="LinkedIn">in</a>
+      <a href="https://github.com/advancia-devuser/advanciapayledger-new" class="social-link" title="GitHub">⌥</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
