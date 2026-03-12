@@ -169,11 +169,11 @@ CFO wallet: $309,950 USD · C$245K · BTC 5.12 · ETH 42.6 · $120K USDT · €2
 npm run build
 
 # 2. Upload to VPS
-scp -r dist/ prisma/ package.json .env root@76.13.77.8:/var/www/advancia-banking/
+scp -r dist/ prisma/ package.json .env root@<YOUR_VPS_IP>:/var/www/advancia-banking/
 
 # 3. SSH and run deploy script
-scp deploy/DEPLOY_ALL.sh root@76.13.77.8:/tmp/
-ssh root@76.13.77.8
+scp deploy/DEPLOY_ALL.sh root@<YOUR_VPS_IP>:/tmp/
+ssh root@<YOUR_VPS_IP>
 chmod +x /tmp/DEPLOY_ALL.sh && /tmp/DEPLOY_ALL.sh
 ```
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # ════════════════════════════════════════════════════════════════════
 #  ADVANCIA PAY LEDGER — VPS DEPLOY
-#  VPS: 76.13.77.8 | advanciapayledger.com
+#  VPS: <YOUR_VPS_IP> | advanciapayledger.com
 #  Frontend: api.advanciapayledger.com → localhost:3001
 #  Banking:  advanciapayledger.com/api/banking → localhost:3005
 #  Demo:     advanciapayledger.com/demo → /var/www/html/demo
