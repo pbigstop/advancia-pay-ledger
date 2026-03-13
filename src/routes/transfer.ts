@@ -1,10 +1,9 @@
 import { Router, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
+import { prisma } from "../lib/prisma";
 import { requireAuth, AuthRequest } from "../middleware/auth";
 
 const router = Router();
-const prisma = new PrismaClient();
 
 const TRANSFER_FEE_RATE = 0.005; // 0.5%
 const MIN_FEE = 0.01;

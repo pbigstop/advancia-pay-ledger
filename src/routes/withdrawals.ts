@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { z } from "zod";
 import speakeasy from "speakeasy";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 import {
   executeWithdrawal,
   getExplorerUrl,
@@ -10,7 +10,6 @@ import { checkAML } from "../services/amlService";
 import { requireAuth, requireAdmin, AuthRequest } from "../middleware/auth";
 
 const router = Router();
-const prisma = new PrismaClient();
 
 // ─── Validation Schema ───────────────────────────────────────────────────────
 

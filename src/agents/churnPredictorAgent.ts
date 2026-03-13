@@ -1,7 +1,5 @@
 import { BaseAgent, AgentType } from "./baseAgent";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 export class ChurnPredictorAgent extends BaseAgent {
   readonly type = AgentType.CHURN_PREDICTOR;

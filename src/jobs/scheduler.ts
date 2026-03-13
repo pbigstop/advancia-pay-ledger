@@ -1,8 +1,6 @@
 import cron from "node-cron";
 import { orchestrator, AgentType } from "../agents/orchestrator";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 export function startScheduler() {
   console.log("[Platform] Starting automated feature scheduler...");

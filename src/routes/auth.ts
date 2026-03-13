@@ -1,11 +1,10 @@
 import { Router, Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
+import { prisma } from "../lib/prisma";
 import { generateToken, requireAuth, AuthRequest } from "../middleware/auth";
 
 const router = Router();
-const prisma = new PrismaClient();
 
 // ── Validation Schemas ───────────────────────────────────────────────────────
 

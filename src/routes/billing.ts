@@ -1,15 +1,14 @@
 import express, { Request, Response } from "express";
 import Stripe from "stripe";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 import { requireAuth, AuthRequest } from "../middleware/auth";
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
 const stripe = stripeSecretKey
-  ? new Stripe(stripeSecretKey, { apiVersion: "2024-06-20" })
+  ? new Stripe(stripeSecretKey, { apiVersion: "2026-02-25.clover" })
   : null;
 
 const STRIPE_PRICES: Record<
@@ -33,6 +32,29 @@ const STRIPE_PRICES: Record<
     amount: 599,
   },
 };
+
+function getSubscriptionPeriod(subscription: Stripe.Subscription): {
+  currentPeriodStart: Date | null;
+  currentPeriodEnd: Date | null;
+} {
+  const currentItem = subscription.items.data[0];
+
+  return {
+    currentPeriodStart: currentItem?.current_period_start
+      ? new Date(currentItem.current_period_start * 1000)
+      : null,
+    currentPeriodEnd: currentItem?.current_period_end
+      ? new Date(currentItem.current_period_end * 1000)
+      : null,
+  };
+}
+
+function getInvoicePaymentIntent(
+  invoice: Stripe.Invoice | null,
+): Stripe.PaymentIntent | null {
+  const intent = invoice?.payments?.data[0]?.payment?.payment_intent;
+  return intent && typeof intent !== "string" ? intent : null;
+}
 
 function ensureStripe(res: Response): Stripe | null {
   if (!stripe) {
@@ -182,8 +204,9 @@ router.post("/upgrade", requireAuth, async (req: Request, res: Response) => {
     }
 
     const latestInvoice = subscription.latest_invoice as Stripe.Invoice | null;
-    const paymentIntent =
-      latestInvoice?.payment_intent as Stripe.PaymentIntent | null;
+    const paymentIntent = getInvoicePaymentIntent(latestInvoice);
+    const { currentPeriodStart, currentPeriodEnd } =
+      getSubscriptionPeriod(subscription);
 
     await prisma.subscription.upsert({
       where: { userId: authUser.id },
@@ -194,12 +217,8 @@ router.post("/upgrade", requireAuth, async (req: Request, res: Response) => {
         stripeSubscriptionId: subscription.id,
         stripeCustomerId: customerId,
         status: subscription.status,
-        currentPeriodStart: subscription.current_period_start
-          ? new Date(subscription.current_period_start * 1000)
-          : null,
-        currentPeriodEnd: subscription.current_period_end
-          ? new Date(subscription.current_period_end * 1000)
-          : null,
+        currentPeriodStart,
+        currentPeriodEnd,
         amount: priceConfig.amount,
       },
       update: {
@@ -209,12 +228,8 @@ router.post("/upgrade", requireAuth, async (req: Request, res: Response) => {
         stripeCustomerId: customerId,
         status: subscription.status,
         amount: priceConfig.amount,
-        currentPeriodStart: subscription.current_period_start
-          ? new Date(subscription.current_period_start * 1000)
-          : null,
-        currentPeriodEnd: subscription.current_period_end
-          ? new Date(subscription.current_period_end * 1000)
-          : null,
+        currentPeriodStart,
+        currentPeriodEnd,
       },
     });
 
@@ -234,7 +249,10 @@ router.post("/upgrade", requireAuth, async (req: Request, res: Response) => {
     return res.json({
       subscriptionId: subscription.id,
       status: subscription.status,
-      clientSecret: paymentIntent?.client_secret ?? null,
+      clientSecret:
+        paymentIntent?.client_secret ??
+        latestInvoice?.confirmation_secret?.client_secret ??
+        null,
       requiresAction: paymentIntent?.status === "requires_action",
     });
   } catch (err: unknown) {
@@ -320,7 +338,7 @@ router.get(
           }),
           sub?.stripeSubscriptionId
             ? stripeClient.invoices
-                .retrieveUpcoming({
+                .createPreview({
                   customer: user.stripeCustomerId,
                   subscription: sub.stripeSubscriptionId,
                 })
@@ -391,10 +409,10 @@ router.post(
     switch (event.type) {
       case "invoice.payment_succeeded": {
         const invoice = event.data.object as Stripe.Invoice;
+        const paymentIntent = getInvoicePaymentIntent(invoice);
         await prisma.billingTransaction.updateMany({
           where: {
-            stripePaymentIntentId:
-              (invoice.payment_intent as string) || undefined,
+            stripePaymentIntentId: paymentIntent?.id || undefined,
           },
           data: { status: "succeeded" },
         });
@@ -424,16 +442,14 @@ router.post(
       }
       case "customer.subscription.updated": {
         const sub = event.data.object as Stripe.Subscription;
+        const { currentPeriodStart, currentPeriodEnd } =
+          getSubscriptionPeriod(sub);
         await prisma.subscription.updateMany({
           where: { stripeSubscriptionId: sub.id },
           data: {
             status: sub.status,
-            currentPeriodStart: sub.current_period_start
-              ? new Date(sub.current_period_start * 1000)
-              : null,
-            currentPeriodEnd: sub.current_period_end
-              ? new Date(sub.current_period_end * 1000)
-              : null,
+            currentPeriodStart,
+            currentPeriodEnd,
           },
         });
         break;

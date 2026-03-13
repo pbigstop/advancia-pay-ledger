@@ -16,7 +16,7 @@ const sendEmailSchema = z.object({
   html: z.string().optional(),
   text: z.string().optional(),
   amp: z.string().optional(),
-  headers: z.record(z.string()).optional(),
+  headers: z.record(z.string(), z.string()).optional(),
   date: z.string().optional(),
   from: z.union([
     z.string().email(),

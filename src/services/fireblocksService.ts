@@ -1,8 +1,6 @@
 import { FireblocksSDK, PeerType } from "fireblocks-sdk";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 import { getExplorerUrl } from "./withdrawalService";
-
-const prisma = new PrismaClient();
 
 let fireblocks: FireblocksSDK | null = null;
 if (process.env.FIREBLOCKS_API_SECRET && process.env.FIREBLOCKS_API_KEY) {

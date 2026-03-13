@@ -7,9 +7,7 @@ import { ChurnPredictorAgent } from "./churnPredictorAgent";
 import { ComplianceMonitorAgent } from "./complianceMonitorAgent";
 import { SupportHandlerAgent } from "./supportHandlerAgent";
 import { EmailComposerAgent } from "./emailComposerAgent";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 export class AgentOrchestrator {
   private agents: Record<AgentType, BaseAgent> = {

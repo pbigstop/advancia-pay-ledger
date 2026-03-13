@@ -1,5 +1,7 @@
 # Advancia Pay Ledger — Financial Engine
 
+> Canonical production repo for the main Advancia app domains: [pdtribe181-prog/modullar-advancia](https://github.com/pdtribe181-prog/modullar-advancia). This repository is a ledger-focused variant/reference codebase and should be treated as a feature donor, not as a parallel live deploy source.
+
 Advancia Pay Ledger is a robust, security-first financial backend designed for high-volume transactions, automated fund routing, and institutional crypto/fiat processing. This system acts as the underlying ledger and orchestrator for facility payouts, user wallets, AI trading pools, and external payment network integration (Stripe/Solana/EVM).
 
 ## Features
@@ -32,7 +34,7 @@ Advancia Pay Ledger is a robust, security-first financial backend designed for h
 ### 1. Prerequisites
 
 - Docker and Docker Compose
-- Node.js v18+
+- Node.js v20.19+
 
 ### 2. Environment Setup
 
@@ -76,6 +78,7 @@ Apply the Prisma schema and seed test data:
 
 ```bash
 npm install
+npm run prisma:generate
 npm run prisma:push
 npm run seed
 ```

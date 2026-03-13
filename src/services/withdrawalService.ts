@@ -13,10 +13,8 @@ import {
 } from "@solana/spl-token";
 import { ethers } from "ethers";
 import bs58 from "bs58";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 import { withdrawViaFireblocks } from "./fireblocksService";
-
-const prisma = new PrismaClient();
 
 // ─── Token Addresses ────────────────────────────────────────────────────────
 
